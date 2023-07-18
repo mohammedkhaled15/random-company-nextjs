@@ -11,7 +11,7 @@ export const links = [
   },
   {
     id: 3,
-    title: "Blog",
+    title: "Blogs",
     url: "/blog",
   },
   {
@@ -21,7 +21,7 @@ export const links = [
   },
   {
     id: 5,
-    title: "Contact",
+    title: "Contacts",
     url: "/contact",
   },
   {

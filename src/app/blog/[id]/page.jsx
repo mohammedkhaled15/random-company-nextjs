@@ -3,27 +3,35 @@ import { blogs } from "../data"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 
-const BlogPost = ({ params }) => {
+const getData = async (id) => {
+  const res = await fetch(`http://localhost:3000/api/posts/${id}`, { cache: "force-cache" })
+
+  if (!res.ok) return notFound()
+
+  return res.json()
+}
+
+const BlogPost = async ({ params }) => {
   const { id } = params
-  const blog = blogs.find(blog => blog.id == id)
-  if (!blog) return notFound()
+  const data = await getData(id)
+  if (!data) return notFound()
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.blogText}>
-          <h2>{blog.title}</h2>
-          <p>{blog.summary}</p>
-          <h5>Author: {blog.author}</h5>
+          <h2>{data.title}</h2>
+          <p>{data.summary}</p>
+          <h5>Author: {data.author}</h5>
         </div>
         <div className={styles.imgContainer}>
           <Image
-            src={blog.img}
+            src={data.img}
             alt="img"
             fill
           />
         </div>
       </div>
-      <div className={styles.desc}>{blog.description}</div>
+      <div className={styles.desc}>{data.desc}</div>
     </div>
   )
 }
