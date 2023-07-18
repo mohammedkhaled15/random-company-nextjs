@@ -1,19 +1,11 @@
 import React from 'react'
 import styles from "./page.module.css"
-import { blogs } from './data'
 import Link from 'next/link'
 import Image from 'next/image'
-
-const getData = async () => {
-  const res = await fetch("http://localhost:3000/api/posts", { cache: "force-cache" })
-
-  if (!res.ok) throw new Error("Error Fetching Data")
-
-  return res.json()
-}
+import { getAllPosts } from '../api/utils/getAllPosts'
 
 const Blog = async () => {
-  const data = await getData()
+  const data = await getAllPosts()
   return (
     <div className={styles.container}>
       {

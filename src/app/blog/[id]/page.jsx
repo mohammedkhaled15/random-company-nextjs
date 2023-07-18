@@ -1,19 +1,13 @@
 import styles from "./blog.module.css"
-import { blogs } from "../data"
 import Image from "next/image"
 import { notFound } from "next/navigation"
+import { getPost } from "@/app/api/utils/getPost"
+import { getAllPosts } from "@/app/api/utils/getAllPosts"
 
-const getData = async (id) => {
-  const res = await fetch(`http://localhost:3000/api/posts/${id}`, { cache: "force-cache" })
-
-  if (!res.ok) return notFound()
-
-  return res.json()
-}
 
 const BlogPost = async ({ params }) => {
   const { id } = params
-  const data = await getData(id)
+  const data = await getPost(id)
   if (!data) return notFound()
   return (
     <div className={styles.container}>
@@ -28,12 +22,18 @@ const BlogPost = async ({ params }) => {
             src={data.img}
             alt="img"
             fill
+            priority={true}
           />
         </div>
       </div>
       <div className={styles.desc}>{data.desc}</div>
     </div>
   )
+}
+
+export const generateStaticParams = async () => {
+  const posts = await getAllPosts()
+  return posts.map(post => post._id.toString())
 }
 
 export default BlogPost
