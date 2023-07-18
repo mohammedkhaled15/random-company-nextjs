@@ -1,7 +1,6 @@
 import Post from "@/models/postModel";
 import connectDb from "@/utils/connectDb";
 import { NextResponse } from "next/server";
-import { blogs } from "@/app/blog/data";
 
 export const GET = async () => {
   try {

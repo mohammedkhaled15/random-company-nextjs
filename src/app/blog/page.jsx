@@ -2,10 +2,18 @@ import React from 'react'
 import styles from "./page.module.css"
 import Link from 'next/link'
 import Image from 'next/image'
-import { getAllPosts } from '../api/utils/getAllPosts'
+import { notFound } from 'next/navigation'
+import { getAllPosts } from '../../utils/getAllPosts'
+// import { blogs } from './data'
+
+export const metadata = {
+  title: "Blog Page",
+  description: "This is a Description"
+}
 
 const Blog = async () => {
   const data = await getAllPosts()
+  if (!data) return notFound()
   return (
     <div className={styles.container}>
       {
