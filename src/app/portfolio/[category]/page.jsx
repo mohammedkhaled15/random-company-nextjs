@@ -31,4 +31,5 @@ const Category = ({ params }) => {
   )
 }
 
+
 export default Category

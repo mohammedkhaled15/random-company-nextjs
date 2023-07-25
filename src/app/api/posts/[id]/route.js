@@ -7,8 +7,8 @@ export const GET = async (request, { params }) => {
   try {
     await connectDb();
     const post = await Post.findById(id);
-    return NextResponse.json(post);
+    return new NextResponse(JSON.stringify(post), { status: 200 });
   } catch (error) {
-    console.log(error);
+    return new NextResponse(JSON.stringify(error), { status: 500 });
   }
 };

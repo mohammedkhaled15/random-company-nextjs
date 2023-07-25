@@ -3,21 +3,29 @@ import styles from "./page.module.css"
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import connectDb from '@/utils/connectDb'
+import Post from "../../models/postModel"
 import { getAllPosts } from '../../utils/getAllPosts'
-// import { blogs } from './data'
 
 export const metadata = {
   title: "Blog Page",
   description: "This is a Description"
 }
 
+
 const Blog = async () => {
-  const data = await getAllPosts()
-  if (!data) return notFound()
+  ///***connecting directly without api***///
+  // await connectDb()
+  // const posts = await Post.find()
+
+  ///***connecting  with api***///
+  const posts = await getAllPosts()
+
+  if (!posts) return notFound()
   return (
     <div className={styles.container}>
       {
-        data.map(blog => {
+        posts.map(blog => {
           return (
             <div key={blog._id} className={styles.blog}>
               <div className={styles.blogText}>

@@ -2,22 +2,30 @@ import styles from "./blog.module.css"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import { getAllPosts } from "@/utils/getAllPosts"
+import connectDb from "@/utils/connectDb"
 import { getPost } from "@/utils/getPost"
-// import { blogs } from "../data"
+import Post from "../../../models/postModel"
 
 export async function generateMetadata({ params }) {
   const id = params.id
-  const post = await getPost(id)
+  // const post = await getPost(id)
+  const blog = await Post.findById(id)
   return {
-    title: post.title,
+    title: blog.title,
   }
 }
 
 const BlogPost = async ({ params }) => {
   const { id } = params
+
+  ///***connecting directly without api***///
+  // await connectDb()
+  // const blog = await Post.findById(id)
+
+  ///***connecting  with api***///
   const blog = await getPost(id)
+
   if (!blog) return notFound()
-  // const blog = blogs.find(item => item.id == id)
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -41,7 +49,8 @@ const BlogPost = async ({ params }) => {
 }
 
 // export const generateStaticParams = async () => {
-//   const blogs = await getAllPosts()
+//   await connectDb()
+//   const blogs = await Post.find()
 //   return blogs.map(blog => ({ id: blog._id.toString() }))
 // }
 
