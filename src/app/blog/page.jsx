@@ -4,13 +4,22 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import connectDb from '@/utils/connectDb'
-import Post from "../../models/postModel"
-import { getAllPosts } from '../../utils/getAllPosts'
+import Post from "../../models/Post"
+// import { getAllPosts } from '../../utils/getAllPosts'
 
 export const metadata = {
   title: "Blog Page",
   description: "This is a Description"
 }
+
+async function getAllPosts() {
+  const res = await fetch("http://localhost:3000/api/posts", { cache: "no-store" });
+
+  if (!res.ok) return notFound();
+
+  return res.json();
+};
+
 
 
 const Blog = async () => {
@@ -21,7 +30,7 @@ const Blog = async () => {
   ///***connecting  with api***///
   const posts = await getAllPosts()
 
-  if (!posts) return notFound()
+  // if (!posts) return notFound()
   return (
     <div className={styles.container}>
       {
