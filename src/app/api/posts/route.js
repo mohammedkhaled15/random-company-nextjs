@@ -1,28 +1,36 @@
-import Post from "@/models/postModel";
-import connectDb from "@/utils/connectDb";
 import { NextResponse } from "next/server";
+import connectDb from "@/utils/connectDb";
+import Post from "@/models/Post";
 
-export const GET = async () => {
+export const GET = async (request) => {
+  // const url = new URL(request.url);
+
+  // const username = url.searchParams.get("username");
+
   try {
     await connectDb();
+
+    // const posts = await Post.find(username && { username });
     const posts = await Post.find();
+
     return new NextResponse(JSON.stringify(posts), { status: 200 });
-  } catch (error) {
-    // console.log(error);
-    return new NextResponse(JSON.stringify(error), { status: 500 });
+  } catch (err) {
+    return new NextResponse("Database Error", { status: 500 });
   }
 };
 
-// // export const POST = async (request) => {
-// //   // console.log(await request.json());
-// //   try {
-// //     await connectDb();
-// //     // const { title, img, desc, content, username } = await request.json();
-// //     // const newPost = new Post({ title, img, desc, content, username });
-// //     await Post.create(blogs);
-// //     // await newPost.save();
-// //     return NextResponse.json("ok");
-// //   } catch (error) {
-// //     console.log(error);
-// //   }
-// // };
+// export const POST = async (request) => {
+//   const body = await request.json();
+
+//   const newPost = new Post(body);
+
+//   try {
+//     await connect();
+
+//     await newPost.save();
+
+//     return new NextResponse("Post has been created", { status: 201 });
+//   } catch (err) {
+//     return new NextResponse("Database Error", { status: 500 });
+//   }
+// };

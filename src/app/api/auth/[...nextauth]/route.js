@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/Google";
 import GithubProvider from "next-auth/providers/Github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import connectDb from "@/utils/connectDb";
-import User from "@/models/userModel";
+import User from "@/models/User";
 import bycryptjs from "bcryptjs";
 
 const handler = NextAuth({
